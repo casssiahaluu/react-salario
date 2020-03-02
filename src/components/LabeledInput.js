@@ -32,17 +32,17 @@ const LabeledInput = ({
   customId,
   label,
   value,
-  onInputChange,
+  onChange,
 }) => (
   <label>
     <span>{ label }</span>
     <input
       id={ customId }
+      min={0}
       disabled={disabled}
       type={!!currency ? 'text' : 'number'}
-      value={() => formatValue(currency, value)}
-      onChange={event => !!onInputChange && onInputChange(event)}
-      min={0}
+      value={formatValue(currency, value)}
+      onChange={event => !!onChange && onChange(event)}
     />
   </label>
 );
@@ -67,8 +67,8 @@ LabeledInput.propTypes = {
   disabled: PropTypes.bool,
   customId: PropTypes.string,
   label: PropTypes.string,
-  value: PropTypes.string,
-  onInputChange: PropTypes.func.isRequired
+  value: PropTypes.number,
+  onChange: PropTypes.func
 };
 
 export default LabeledInput;
