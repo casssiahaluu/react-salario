@@ -64,7 +64,6 @@ export class Salario {
     this._validarSalarioBruto(pSalarioBruto);
     this._realizarCalculos();
 
-    //Congelando
     Object.freeze(this);
   }
 
@@ -95,28 +94,9 @@ export class Salario {
   _calcularDescontoINSS() {
     let descontoINSS = 0;
 
-    /**
-     * Pra cada item da tabelaINSS, procuramos
-     * onde a baseINSS "se encaixa". Assim que
-     * acharmos, calculamos o desconto e
-     * "quebramos" o loop para evitar cálculos
-     * desnecessários
-     */
     for (let item of tabelaINSS_2018) {
       if (this._baseINSS <= item.ate) {
-        /**
-         * Nesse momento, encontramos o item correto.
-         * Precisamos calcular o desconto com base no teto do INSS.
-         * Por isso, o Math.min auxilia garantindo o valor
-         * mínimo com base em TETO_INSS_2018
-         */
         descontoINSS = Math.min(this._baseINSS * (item.aliquota / 100), TETO_INSS_2018);
-
-        /**
-         * Uma vez que encontramos, forçamos o
-         * encerramento do for para evitar
-         * calculos desnecessários (performance)
-         */
         break;
       }
     }
@@ -124,11 +104,6 @@ export class Salario {
     return descontoINSS;
   }
 
-  /**
-   * O cálculo é bastante semelhante ao do INSS,
-   * exceto pelo teto, que não existe e pela aplicação
-   * da dedução
-   */
   _calcularDescontoIRPF() {
     let descontoIRPF = 0;
 
