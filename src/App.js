@@ -1,11 +1,20 @@
 import React, {Component} from 'react';
 
-import 'bulma';
 import { interval } from 'rxjs';
 import { filter, map, takeUntil } from 'rxjs/operators';
 
+import {
+  Button,
+  Col,
+  Container,
+  Jumbotron,
+  Row
+} from 'reactstrap';
+
 import { Salario } from './helpers/Salario';
 import LabeledInput from './components/LabeledInput';
+
+import './App.css';
 
 import logo from './logo.svg';
 
@@ -53,62 +62,57 @@ export default class App extends Component {
 
   render() {
     return (
-      <div className="columns is-mobile">
-        <div className="column">
-          <div className="columns">
-            <div className="column is-full">
-              <img alt="Logo React" src={logo} width="150px"/>
-            </div>
-            <div className="column">
-              <h3>
-                Cálculo de salário com React.js
-              </h3>
-            </div>
-          </div>
-          <div className="columns">
-            <div className="column is-half">
-              <div className="columns"><h3>Cálculo em tempo real</h3></div>
-              <div className="columns">
+      <Container className="App">
+        <Row>
+          <Col className="text-center">
+            <h1>Calculadora de Salário Líquido em React.js <img src={logo} alt="React Logo" width="150px"/></h1>
+          </Col>
+        </Row>
+        <Row>
+          <Col className="calc">
+            <Jumbotron>
+              <Col><h3>Cálculo em tempo real</h3></Col>
+              <Col>
                 <LabeledInput
                   label="Salário bruto:"
                   customId="inputSalarioBruto"
                   value={this.state.salarioBruto}
                   onChange={(event) => this.updateSalario(event)}
                   />
-              </div>
-              <div className="columns">
+              </Col>
+              <Col>
                 <LabeledInput
                   disabled
                   currency
                   label="Base INSS:"
                   value={this.state.salario.baseINSS}
                   />
-              </div>
-              <div className="columns">
+              </Col>
+              <Col>
                 <LabeledInput
                   disabled
                   currency
                   label="Desconto INSS:"
                   value={this.state.salario.descontoINSS}
                   />
-              </div>
-              <div className="columns">
+              </Col>
+              <Col>
                 <LabeledInput
                   disabled
                   currency
                   label="Base IRPF:"
                   value={this.state.salario.baseIRPF}
                   />
-              </div>
-              <div className="columns">
+              </Col>
+              <Col>
                 <LabeledInput
                   disabled
                   currency
                   label="Desconto IRPF:"
                   value={this.state.salario.descontoIRPF}
                   />
-              </div>
-              <div className="columns">
+              </Col>
+              <Col>
                 <LabeledInput
                   disabled
                   currency
@@ -116,27 +120,27 @@ export default class App extends Component {
                   customId="inputSalarioLiquido"
                   value={this.state.salario.salarioLiquido}
                   />
-              </div>
-            </div>
-            <div className="column">
-              <h3>
-                Cálculo reverso com Observables
-              </h3>
-
-              <LabeledInput
-                value={this.state.salarioLiquidoDesejado}
-                label="Salário líquido desejado:"
-                customId="inputSalarioLiquidoDesejado"
-                onChange={(event) => this.updateSalarioLiquidoDesejado(event)}
+              </Col>
+            </Jumbotron>
+          </Col>
+          <Col className="calc-reverse">
+            <Jumbotron>
+              <h3>Cálculo reverso com Observables</h3>
+              <Col sm={12}>
+                <LabeledInput
+                  value={this.state.salarioLiquidoDesejado}
+                  label="Salário líquido desejado:"
+                  customId="inputSalarioLiquidoDesejado"
+                  onChange={(event) => this.updateSalarioLiquidoDesejado(event)}
                 />
-
-              <button onClick={() => this.findSalarioBrutoFromLiquido()}>
-                Calcular salário bruto correspondente
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+              </Col>
+              <Col sm={{ size: 10, offset: 4 }}>
+                <Button outline color="primary" onClick={() => this.findSalarioBrutoFromLiquido()}>Calcular salário bruto correspondente</Button>
+              </Col>
+            </Jumbotron>
+          </Col>
+        </Row>
+      </Container>
     )
   }
 };

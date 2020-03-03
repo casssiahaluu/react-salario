@@ -1,21 +1,16 @@
 import React from 'react';
-
-/**
- * Uma boa prática para criar componentes é
- * utilizar PropTypes. Isso facilita o trabalho
- * do desenvolvedor que irá utilizar o componente.
- *
- * O VSCode, por exemplo, utiliza as PropTypes para
- * mostrar ao desenvolvedor quais props ele pode
- * utilizar com o componente, por exemplo.
- *
- */
 import PropTypes from 'prop-types';
 
-/**
- * O componente TextField faz parte do package Material UI,
- * que leva o Material Design do Google ao React.
- */
+import {
+  Col,
+  Form,
+  FormGroup,
+  Input,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
+  Label
+} from 'reactstrap';
 
 const formatValue = (currency, value) => {
   if (!currency) return value;
@@ -34,33 +29,33 @@ const LabeledInput = ({
   value,
   onChange,
 }) => (
-  <label>
-    <span>{ label }</span>
-    <input
-      id={ customId }
-      min={0}
-      disabled={disabled}
-      type={!!currency ? 'text' : 'number'}
-      value={formatValue(currency, value)}
-      onChange={event => !!onChange && onChange(event)}
-    />
-  </label>
+  <Form>
+    <FormGroup row>
+      <Label for={ customId } sm={5}>{ label }</Label>
+      <Col sm={7}>
+        <InputGroup>
+          <InputGroupAddon addonType="prepend">
+            {!disabled && <InputGroupText>$</InputGroupText>}
+          </InputGroupAddon>
+          <Input
+            min={0}
+            id={ customId }
+            name={ customId }
+            disabled={ disabled }
+            type={!!currency ? 'text' : 'number'}
+            value={formatValue(currency, value)}
+            onChange={event => !!onChange && onChange(event)}
+          />
+        </InputGroup>
+      </Col>
+    </FormGroup>
+  </Form>
 );
-
-/**
- * Aqui definimos valores
- * default para cada prop
- */
 
 LabeledInput.defaultProps = {
   currency: false,
   disabled: false
 };
-
-/**
- * Aqui definimos os tipos
- * de cada prop.
- */
 
 LabeledInput.propTypes = {
   currency: PropTypes.bool,
