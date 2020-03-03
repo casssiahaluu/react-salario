@@ -1,0 +1,11 @@
+.App {
+  margin-top: 5em;
+}
+
+.App .calc .jumbotron {
+  background-color: #e9efed;
+}
+
+.App .calc-reverse .jumbotron {
+  background-color: #dfe8f1;
+}
